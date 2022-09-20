@@ -37,6 +37,9 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
   gem 'ffaker'
+  gem 'net-imap', require: false
+  gem 'net-pop', require: false
+  gem 'net-smtp', require: false
   gem 'rspec-rails'
   gem 'rubocop-performance', require: false
   gem 'rubocop-rspec', require: false

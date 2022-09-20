@@ -3,6 +3,6 @@
 class InvoicesController < ApplicationController
   before_action :logged_in?
   def index
-    # TODO:
+    # TODO: pending invoices service
   end
 end
