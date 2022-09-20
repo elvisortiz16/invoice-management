@@ -1,0 +1,5 @@
+es:
+  user:
+    invalid_email: "Dirección de correo Inválida"
+    loggin_error: "Aún no has hecho login"
+    not_found: "Usuario o contraseña inválida"
