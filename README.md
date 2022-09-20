@@ -1,3 +1,6 @@
+#   Elvis Readme
+link to [ db diagram ](https://dbdiagram.io/d/6329e9cd0911f91ba5f6e51a)
+  
 # Part II
 
 This is the Rails starter code for take-home assessment.
