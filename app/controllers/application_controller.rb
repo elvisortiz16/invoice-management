@@ -2,6 +2,7 @@
 
 class ApplicationController < ActionController::API
   rescue_from CustomException, with: :render_custom_exception
+  rescue_from ActiveRecord::RecordNotFound, with: :render_record_exception
   before_action :set_locale, :set_current_user
 
   def set_locale
@@ -21,5 +22,9 @@ class ApplicationController < ActionController::API
 
   def render_custom_exception(error)
     render json: { error: }, status: :unauthorized if Current.user.nil?
+  end
+
+  def render_record_exception(error)
+    render json: { error: }, status: :not_found
   end
 end

@@ -19,6 +19,8 @@ gem 'jbuilder', '~> 2.7'
 gem 'bcrypt', '~> 3.1.7'
 # Use jwt to return jwt token
 gem 'jwt'
+# build a qr code from a string
+gem 'rqrcode'
 
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
