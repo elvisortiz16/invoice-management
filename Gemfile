@@ -32,6 +32,10 @@ gem 'bootsnap', '>= 1.4.4', require: false
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
 
+gem 'net-imap', require: false
+gem 'net-pop', require: false
+gem 'net-smtp', require: false
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'awesome_print'
@@ -40,9 +44,6 @@ group :development, :test do
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
   gem 'factory_bot_rails'
   gem 'ffaker'
-  gem 'net-imap', require: false
-  gem 'net-pop', require: false
-  gem 'net-smtp', require: false
   gem 'rspec-rails'
   gem 'rubocop-performance', require: false
   gem 'rubocop-rspec', require: false

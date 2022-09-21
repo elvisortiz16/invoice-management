@@ -32,6 +32,7 @@ RSpec.describe 'InvoicesController', type: :request do
         get '/invoices/1/qr'
         expect(response).to have_http_status(:unauthorized)
       end
+
       it 'massive return 401 unauthorized' do
         post '/invoices/massive'
         expect(response).to have_http_status(:unauthorized)
@@ -40,7 +41,8 @@ RSpec.describe 'InvoicesController', type: :request do
 
     context 'with user logged in' do
       let(:invoice) { create(:invoice) }
-      let(:file) { fixture_file_upload("#{Rails.root}/spec/fixtures/upload_example.zip") }
+      let(:file) { fixture_file_upload( Rails.root.join('spec/fixtures/upload_example.zip')) }
+
       before do
         allow_any_instance_of(ApplicationController).to receive(:logged_in?).and_return(true)
       end
@@ -77,7 +79,7 @@ RSpec.describe 'InvoicesController', type: :request do
       end
 
       it 'massive return 200 and true' do
-        post "/invoices/massive", params: { file: file }
+        post '/invoices/massive', params: { file: }
         expect(response).to have_http_status(:ok)
         expect(response.body).to be_truthy
       end

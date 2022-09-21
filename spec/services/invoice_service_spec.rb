@@ -97,18 +97,21 @@ RSpec.describe InvoiceService do
       expect(RQRCode::QRCode).to have_received(:new).with(invoice.cfdi_digital_stamp)
     end
   end
+
   describe 'massive_upload' do
     before do
       allow(MassiveInvoicesJob).to receive(:perform_later).and_return(true)
     end
-    let(:file) { Rack::Test::UploadedFile.new("#{Rails.root}/spec/fixtures/upload_example.zip")}
+
+    let(:file) { fixture_file_upload( Rails.root.join('spec/fixtures/upload_example.zip')) }
+
     it 'start' do
-      expect( subject.massive_upload_start({file:})).to be_truthy
+      expect(subject.massive_upload_start({ file: })).to be_truthy
     end
+
     it 'finish' do
-      expect( subject.massive_upload(file.tempfile.path)).to be_truthy
+      expect(subject.massive_upload(file.tempfile.path)).to be_truthy
       expect(Invoice.count).to eq(10)
     end
   end
-
 end

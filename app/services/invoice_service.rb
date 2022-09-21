@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+
 require 'zip'
 
 class InvoiceService
@@ -40,18 +41,19 @@ class InvoiceService
   def self.generate_qr(params)
     RQRCode::QRCode.new(Invoice.find(params[:id]).cfdi_digital_stamp).as_png(size: 500)
   end
+
   def self.massive_upload_start(params)
     # asumming the file is at the same server, if we use blob storage we need to change this code
     MassiveInvoicesJob.perform_later(params[:file].tempfile.path)
     true
   end
-  def self.massive_upload(path)
 
+  def self.massive_upload(path)
     invoices = []
     Zip::File.open(path) do |files|
-      files.each do |file| 
+      files.each do |file|
         xml = Hash.from_xml(file.get_input_stream.read)['hash'].deep_symbolize_keys
-        invoices.push(build_params(xml).merge(created_at: Time.now, updated_at: Time.now))
+        invoices.push(build_params(xml).merge(created_at: Time.zone.now, updated_at: Time.zone.now))
       end
     end
     Invoice.insert_all!(invoices)
@@ -60,7 +62,7 @@ class InvoiceService
   def self.build_params(params) # rubocop:disable Metrics/MethodLength
     emitter_rfc = params.dig(:emitter, :rfc)
     receiver_rfc = params.dig(:receiver, :rfc)
-{
+    {
       invoice_uuid: params[:invoice_uuid],
       status: params[:status],
       emitter_name: params.dig(:emitter, :name),

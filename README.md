@@ -8,6 +8,10 @@ default_users:
 elvis1@gmail.com:1234567890
 elvis2@gmail.com:1234567890
 
+## heroku url with invoice path : https://pacific-refuge-42318.herokuapp.com/invoices
+
+
+
 # Part II
 
 This is the Rails starter code for take-home assessment.

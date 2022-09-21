@@ -1,7 +1,7 @@
-class MassiveInvoicesJob < ApplicationJob
+# frozen_string_literal: true
 
-    def perform(path)
-       InvoiceService.massive_upload(path)
-      end
+class MassiveInvoicesJob < ApplicationJob
+  def perform(path)
+    InvoiceService.massive_upload(path)
+  end
 end
-  
