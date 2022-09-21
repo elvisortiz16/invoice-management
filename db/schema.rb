@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_20_171656) do
+ActiveRecord::Schema.define(version: 2022_09_21_162657) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,10 @@ ActiveRecord::Schema.define(version: 2022_09_20_171656) do
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "emitter_id"
     t.bigint "receiver_id"
+    t.string "emitter_name"
+    t.string "emitter_rfc"
+    t.string "receiver_name"
+    t.string "receiver_rfc"
     t.index ["amount"], name: "index_invoices_on_amount"
     t.index ["emitted_at"], name: "index_invoices_on_emitted_at"
     t.index ["emitter_id"], name: "index_invoices_on_emitter_id"
