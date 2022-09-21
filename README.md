@@ -1,6 +1,13 @@
 #   Elvis Readme
 link to [ db diagram ](https://dbdiagram.io/d/6329e9cd0911f91ba5f6e51a)
-  
+
+[postman collection](https://www.postman.com/collections/18213b017e0f91b010aa)
+*Important to test massive upload the project has a file in spec/fixtures/uplaod_example.zip*
+
+default_users:
+elvis1@gmail.com:1234567890
+elvis2@gmail.com:1234567890
+
 # Part II
 
 This is the Rails starter code for take-home assessment.

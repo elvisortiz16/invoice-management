@@ -21,7 +21,8 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'jwt'
 # build a qr code from a string
 gem 'rqrcode'
-
+# uncompress invoices inside a zip
+gem 'rubyzip'
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 

@@ -27,6 +27,10 @@ class InvoicesController < ApplicationController
     send_data data, type: 'image/png'
   end
 
+  def massive_upload
+    render json: InvoiceService.massive_upload_start(params.permit(:file))
+  end
+
   def allowed_filters_params
     params.permit(
       :type, :status, :emitter, :receiver, :amount_range, :emitted_at
