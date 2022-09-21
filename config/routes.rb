@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   resources :invoices, only: %i[index create update destroy]
   get 'invoices/total', action: :total, controller: :invoices
   get 'invoices/:id/qr', action: :generate_qr, controller: :invoices
+  post 'invoices/massive', action: :massive_upload, controller: :invoices
 end

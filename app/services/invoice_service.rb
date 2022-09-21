@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'zip'
 
 class InvoiceService
   def self.get_all(params)
@@ -39,11 +40,27 @@ class InvoiceService
   def self.generate_qr(params)
     RQRCode::QRCode.new(Invoice.find(params[:id]).cfdi_digital_stamp).as_png(size: 500)
   end
+  def self.massive_upload_start(params)
+    # asumming the file is at the same server, if we use blob storage we need to change this code
+    MassiveInvoicesJob.perform_later(params[:file].tempfile.path)
+    true
+  end
+  def self.massive_upload(path)
+
+    invoices = []
+    Zip::File.open(path) do |files|
+      files.each do |file| 
+        xml = Hash.from_xml(file.get_input_stream.read)['hash'].deep_symbolize_keys
+        invoices.push(build_params(xml).merge(created_at: Time.now, updated_at: Time.now))
+      end
+    end
+    Invoice.insert_all!(invoices)
+  end
 
   def self.build_params(params) # rubocop:disable Metrics/MethodLength
     emitter_rfc = params.dig(:emitter, :rfc)
     receiver_rfc = params.dig(:receiver, :rfc)
-    invoice = {
+{
       invoice_uuid: params[:invoice_uuid],
       status: params[:status],
       emitter_name: params.dig(:emitter, :name),
@@ -55,10 +72,9 @@ class InvoiceService
       emitted_at: params[:emitted_at],
       expires_at: params[:expires_at],
       signed_at: params[:signed_at],
-      cfdi_digital_stamp: params[:cfdi_digital_stamp]
+      cfdi_digital_stamp: params[:cfdi_digital_stamp],
+      emitter_id: User.find_by(tax_id: emitter_rfc)&.id,
+      receiver_id: User.find_by(tax_id: receiver_rfc)&.id
     }
-    invoice[:emitter] = User.find_by(tax_id: emitter_rfc)
-    invoice[:receiver] = User.find_by(tax_id: receiver_rfc)
-    invoice
   end
 end
